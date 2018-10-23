@@ -55,4 +55,4 @@ RUN apt-get install docker-ce -y
 USER ${BAMBOO_USER}
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.builder.mvn3.Maven 3.3" /usr/share/maven
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.git.executable" /usr/bin/git
-RUN usermod -a -G docker bamboo
+#RUN usermod -a -G docker bamboo
