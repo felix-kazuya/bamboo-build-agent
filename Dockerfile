@@ -40,7 +40,19 @@ RUN \
   apt-get install -y oracle-java8-installer && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
+RUN apt-get install python -y
+#RUN apt-get install python-pip3 -y
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg |  apt-key add -
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN apt-get update
+RUN apt-get install docker-ce -y
+
+#RUN apt-get install docker-engine -y
+#RUN pip install --upgrade pip
+#RUN pip install --upgrade virtualenv
+#RUN pip install --upgrade docker-py 
 
 USER ${BAMBOO_USER}
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.builder.mvn3.Maven 3.3" /usr/share/maven
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.git.executable" /usr/bin/git
+RUN usermod -a -G docker ${BAMBOO_USER_HOME}
