@@ -90,6 +90,11 @@ RUN echo '#!/bin/bash' >> /bin/ok
 RUN echo 'echo ok' >> /bin/ok
 RUN chmod +x /bin/ok
 
+
+RUN echo '#!/bin/bash' >> /usr/local/bin/ok
+RUN echo 'echo ok' >> /usr/local/bin/ok
+RUN chmod +x /usr/local/bin/ok
+
 RUN apt-get install ansible -y
 
 #USER ${BAMBOO_USER}
