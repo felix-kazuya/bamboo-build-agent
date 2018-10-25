@@ -55,7 +55,44 @@ RUN pip install --upgrade virtualenv
 RUN pip install --upgrade docker-py 
 RUN usermod -a -G docker bamboo
 
+RUN export DEBIAN_FRONTEND=noninteractive yes
+RUN apt-get update 
+RUN apt-get install apache2 -y
+RUN apt-get install libapache2-mod-auth-kerb -y
+RUN apt-get install  libapache2-mod-php -y
+RUN apt-get install  php -y
+RUN apt-get install  php-mysql -y
+RUN apt-get install  php-intl -y 
+RUN apt-get install php-ldap -y 
+RUN apt-get install php7.2-mysql -y 
+RUN apt-get install libapache2-mod-php7.2 -y
+# RUN apt-get install php7.0-mcrypt -y 
+RUN apt-get install php7.2-curl -y
+RUN apt-get install  php7.2-xml -y 
+RUN apt-get install php7.2-mbstring -y 
+RUN apt-get install php7.2-zip -y
+RUN apt-get install  php7.2-ldap -y
+
+RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log \
+      && ln -sf /proc/self/fd/1 /var/log/apache2/error.log \
+      && ln -sf /proc/self/fd/1 /var/log/apache2/ssl_access.log \
+      && ln -sf /proc/self/fd/1 /var/log/apache2/other_vhosts_access.log \
+      && a2dismod auth_kerb php7.2 \
+      && phpdismod mysqli zip xml ldap mcrypt curl mbstring
+
+
+RUN export DEBIAN_FRONTEND=noninteractive yes \
+    && apt-get update \
+    && apt-get install composer -y \
+    && phpenmod mysqli zip xml ldap mcrypt curl mbstring
+
+RUN echo '#!/bin/bash' >> /bin/ok
+RUN echo 'echo ok' >> /bin/ok
+RUN chmod +x /bin/ok
 
 #USER ${BAMBOO_USER}
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.builder.mvn3.Maven 3.3" /usr/share/maven
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.git.executable" /usr/bin/git
+
+CMD /bin/bash
+ENTRYPOINT /bin/bash
