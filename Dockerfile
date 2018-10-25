@@ -2,6 +2,7 @@ FROM atlassian/bamboo-agent-base
 USER root
 ENV TERM=xterm
 ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get install composer -y 
 RUN apt-get update 
 RUN apt-get install apt-utils -y
@@ -55,6 +56,6 @@ RUN pip install --upgrade docker-py
 RUN usermod -a -G docker bamboo
 
 
-USER ${BAMBOO_USER}
+#USER ${BAMBOO_USER}
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.builder.mvn3.Maven 3.3" /usr/share/maven
 RUN ${BAMBOO_USER_HOME}/bamboo-update-capability.sh "system.git.executable" /usr/bin/git
