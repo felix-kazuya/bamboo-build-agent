@@ -97,7 +97,7 @@ RUN chmod +x /usr/local/bin/ok
 
 RUN apt-get install ansible -y
 
-RUN sudo sh -c 'echo "deb https://packages.atlassian.com/atlassian-sdk-deb stable contrib" >>/etc/apt/sources.list'
+RUN sh -c 'echo "deb https://packages.atlassian.com/atlassian-sdk-deb stable contrib" >>/etc/apt/sources.list'
 RUN wget https://packages.atlassian.com/api/gpg/key/public  && apt-key add public   
 RUN apt-get update && apt-get install atlassian-plugin-sdk
 
