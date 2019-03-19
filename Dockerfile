@@ -3,8 +3,8 @@ USER root
 ENV TERM=xterm
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get install composer -y 
 RUN apt-get update 
+RUN apt-get install composer -y 
 RUN apt-get install apt-utils -y
 RUN apt-get install maven -y 
 RUN apt-get install git -y
